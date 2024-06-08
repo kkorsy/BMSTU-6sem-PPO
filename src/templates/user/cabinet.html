@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User's account</title>
+<style>
+    body {
+            font-family: georgia;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(239, 233, 240);
+        }
+        h1 {
+            color: #333;
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(228, 72, 72, 0.142);
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        label {
+            font-family: inherit;
+            font-size: 20px;
+            margin: 15px 0px 0px 0px;
+        }
+        input[type=submit] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            margin: 15px 0px 0px 0px;
+            width: 100%;
+            cursor: pointer;
+        }
+        button {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            width: 150%;
+        }
+        input[type=text], input[type=password] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: aliceblue;; 
+            font-family: inherit;
+            font-size: inherit;
+            padding: 3px 0px 3px 3px;
+        }
+        .form {
+            background-color: rgb(184, 160, 174); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 37%;
+            padding: 30px;
+        }
+        .profile {
+            background-color: rgb(219, 204, 213); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 5%;
+            padding: 30px;
+        }
+</style>
+</head>
+<body>
+<center>
+    <h1>User's account</h1>
+    <form action="/", method="get" style="position: absolute; left: 85%; top: 2.5%;">
+        <button type="submit" style="cursor: pointer;">На главную</button>
+    </form>
+</center>
+<div class="profile">
+    <label>Логин: {{.User.U_login}}</label><br>
+    <label>Имя: {{.User.U_name}}</label><br>
+    <label>Фамилия: {{.User.U_surname}}</label><br>
+    <label>Дата рождения: {{.User.U_bdate}}</label><br>
+    <label>Пол: {{.User.U_gender}}</label>
+</div>
+
+<div class="form">
+    <label style="margin: 0; padding: 0; color: rgb(0, 102, 0); font-size: 18px;">{{.Msg}}</label><br>
+    <form action="../addComment" method="get">
+        <input type="submit" value="Добавить комментарий"><br>
+    </form>
+    <form action="../updateComment" method="get">
+        <input type="submit" value="Изменить комментарий"><br>
+    </form>
+    <form action="../deleteComment" method="get">
+        <input type="submit" value="Удалить комментарий"><br>
+    </form>
+    <form action="../favourites" method="get">
+        <input type="submit" value="Избранное"><br>
+    </form>
+    <form action="../changeProfile" method="get">
+        <input type="submit" value="Редактировать профиль"><br>
+    </form>
+    <form action="../history" method="get">
+        <input type="submit" value="История просмотров"><br>
+    </form>
+    <form action="../compareSerials" method="get">
+        <input type="submit" value="Сравнить сериалы"><br>
+    </form>
+    <form action="../exit" method="get">
+        <input type="submit" value="Выйти"><br>
+    </form>
+</div>
+</body>
+</html>

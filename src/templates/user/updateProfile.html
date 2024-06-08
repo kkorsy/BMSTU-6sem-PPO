@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Update profile</title>
+<style>
+    body {
+        font-family: georgia;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(239, 233, 240);
+    }
+    h1 {
+        color: #333;
+        font-size: 55px;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+        background-color: rgba(228, 72, 72, 0.142);
+    }
+    p {
+        color: #666;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+    label {
+        font-family: inherit;
+        font-size: 20px;
+        margin: 15px 0px 0px 0px;
+    }
+    input[type=submit] {
+        border: #333;
+        border-radius: 10px 10px;
+        background-color: rgb(55, 47, 56);
+        color: aliceblue;
+        font-size: 20px;
+        font-family: inherit;
+        padding: 5px 10px;
+        margin: 15px 0px 0px 0px;
+        width: 100%;
+        cursor: pointer;
+    }
+    input[type=text], input[type=password], input[type=date], input[type=number]{
+        border: #333;
+        border-radius: 10px 10px;
+        background-color: aliceblue;; 
+        font-family: inherit;
+        font-size: inherit;
+        width: 100%;
+        padding: 3px 0px 3px 3px;
+        cursor: text;
+    }
+    input[type=radio] {
+        font-family: inherit;
+        font-size: inherit;
+        margin: 2px;
+        cursor: pointer;
+    }
+    fieldset {
+        font-family: inherit;
+        font-size: inherit;
+        margin: 2px;
+    }
+    .form {
+        background-color: rgb(184, 160, 174); 
+        position: absolute; 
+        font-family: inherit;
+        font-size: 23px;
+        top: 10%;
+        left: 38%;
+        padding: 30px;
+    }
+</style>
+</head>
+<body>
+<center>
+    <h1>Изменение профиля</h1>
+</center>
+
+<div class="form">
+<label style="margin: 0; padding: 0; color: rgb(186, 0, 0); font-size: 18px;">{{.Err}}</label><br>
+<form method="post">
+    <input type="hidden" name="id" value={{.User.U_id}}><br>
+    <label>Логин</label><br>
+    <input type="text" name="login" value="{{.User.U_login}}"><br>
+    <label>Имя</label><br>
+    <input type="text" name="name" value="{{.User.U_name}}"><br>
+    <label>Фамилия</label><br>
+    <input type="text" name="surname" value="{{.User.U_surname}}"><br>
+    <label>Пароль</label><br>
+    <input type="password" name="password" value=""><br>
+    {{if eq .User.U_gender "мужской"}}
+    <fieldset>
+        <legend>Пол</legend>
+        <input type="radio" name="gender" value="мужской" checked>
+        <label>Мужской</label>
+        <input type="radio" name="gender" value="женский">
+        <label>Женский</label>
+    </fieldset>
+    {{else}}
+    <fieldset>
+        <legend>Пол</legend>
+        <input type="radio" name="gender" value="мужской">
+        <label>Мужской</label>
+        <input type="radio" name="gender" value="женский" checked>
+        <label>Женский</label>
+    </fieldset>
+    {{end}}
+    <label>Дата рождения</label><br>
+    <input type="date" name="bdate" value="{{.User.U_bdate}}"><br>
+    <input type="submit" value="Изменить"><br>
+</form>
+</div>
+</body>
+</html>

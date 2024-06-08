@@ -1,0 +1,7 @@
+port = ":3000"
+db_url = "user=postgres dbname=serials password=5454038 host=localhost port=5432 sslmode=disable"
+db_type = "mongo"
+
+log_path = "./logger/log.txt"
+
+session = "6f3ydgsc72vfdljhcdjdd7374ndwj8dn"

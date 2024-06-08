@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Show statistics</title>
+<style>
+    body {
+            font-family: georgia;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(239, 233, 240);
+        }
+        h1 {
+            color: #333;
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(228, 72, 72, 0.142);
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        label {
+            font-family: inherit;
+            font-size: 20px;
+            margin: 15px 0px 0px 0px;
+        }
+        input[type=submit] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            margin: 5px;
+            width: fit-content;
+            cursor: pointer;
+        }
+        button {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            width: 150%;
+        }
+        input[type=text], input[type=password] input[type=checkbox] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: aliceblue;; 
+            font-family: inherit;
+            font-size: inherit;
+            padding: 3px 0px 3px 3px;
+        }
+        .form {
+            background-color: rgb(184, 160, 174); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 37%;
+            padding: 30px;
+        }
+        .profile {
+            background-color: rgb(219, 204, 213); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 5%;
+            padding: 30px;
+        }
+        table {
+            border: 2px solid rgb(26, 19, 19);
+            border-collapse: collapse;
+            margin: 25px;
+            font-size: 18px;
+            width: 80%;
+        }
+        thead {
+            background-color: rgb(255, 240, 240);
+        }
+        th, td {
+            border: 1px solid rgb(26, 19, 19);
+            padding: 2px;
+            background-color: rgb(255, 240, 240);
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 10px;
+            margin: 10px;
+        }
+        .wrapper{
+            display:flex;
+            flex-direction: column;
+            border: 2px solid rgb(26, 19, 19);
+            background-color: rgba(214, 204, 215, 0.888);
+        }
+        .chart-container {
+            width: 50%;
+            margin: 20px auto;
+        }
+</style>
+</head>
+<body>
+<center>
+    <h1>Статистика</h1>
+    <form action="cabinet/0", method="get" style="position: absolute; left: 85%; top: 2.5%;">
+        <button type="submit" style="cursor: pointer;">Профиль</button>
+    </form>
+</center>
+
+<center><h2>Статистика по полу и ролям</h2></center>
+
+<input id="male" type="hidden" value={{.St_gender_male}}> 
+<input id="female" type="hidden" value={{.St_gender_female}}>
+<input id="role_user" type="hidden" value="{{.St_role_user}}">
+<input id="role_admin" type="hidden" value="{{.St_role_admin}}">
+
+<div class="chart-container">
+    <canvas id="gender-role-chart"></canvas>
+</div>
+
+<center><h2>Статистика по возрасту</h2></center>
+
+<input id="age_0_18" type="hidden" value={{.St_age_0_18}}>
+<input id="age_19_30" type="hidden" value={{.St_age_19_30}}>
+<input id="age_31_50" type="hidden" value={{.St_age_31_50}}>
+<input id="age_51_100" type="hidden" value={{.St_age_51_100}}>
+
+<div class="chart-container">
+    <canvas id="age-chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ageStatistics = {
+        age_0_18: Number(document.getElementById('age_0_18').value),
+        age_19_30: Number(document.getElementById('age_19_30').value),
+        age_31_50: Number(document.getElementById('age_31_50').value),
+        age_51_100: Number(document.getElementById('age_51_100').value)
+    };
+
+    const ageCtx = document.getElementById('age-chart').getContext('2d');
+    new Chart(ageCtx, {
+        type: 'pie',
+        data: {
+            labels: ['0-18', '19-30', '31-50', '51-100'],
+            datasets: [{
+                data: [ageStatistics.age_0_18, ageStatistics.age_19_30, ageStatistics.age_31_50, ageStatistics.age_51_100],
+                backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+<script>
+    const statistics = {
+        male: Number(document.getElementById('male').value),
+        female: Number(document.getElementById('female').value),
+        role_user: Number(document.getElementById('role_user').value),
+        role_admin: Number(document.getElementById('role_admin').value)
+    };
+
+    const ctx = document.getElementById('gender-role-chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Male', 'Female', 'User', 'Admin'],
+            datasets: [{
+                data: [statistics.male, statistics.female, statistics.role_user, statistics.role_admin],
+                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true,
+                scaleLabel: {
+                display: true,
+                labelString: 'Number of users'
+                }
+            }
+            },
+            plugins: {
+            legend: {
+                display: false
+            }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

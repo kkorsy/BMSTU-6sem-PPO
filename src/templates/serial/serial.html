@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{.Serial.S_name}}</title>
+<style>
+    body {
+            font-family: georgia;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(239, 233, 240);
+        }
+        h1 {
+            color: #333;
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(228, 72, 72, 0.142);
+        }
+        h2 {
+            color: #333;
+            width: 100%;
+            margin: 20px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+        label {
+            font-family: inherit;
+            font-size: 20px;
+            margin: 15px 0px 0px 0px;
+        }
+        input[type=submit] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            margin: 15px 0px 0px 0px;
+            width: fit-content;
+            cursor: pointer;
+        }
+        input[type=text], input[type=password] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: aliceblue;; 
+            font-family: inherit;
+            font-size: inherit;
+            padding: 3px 0px 3px 3px;
+        }
+        table {
+            border: 2px solid rgb(26, 19, 19);
+            border-collapse: collapse;
+            margin: 25px;
+            font-size: 18px;
+            width: 80%;
+        }
+        thead {
+            background-color: rgb(255, 240, 240);
+        }
+        th, td {
+            border: 1px solid rgb(26, 19, 19);
+            padding: 2px;
+            background-color: rgb(255, 240, 240);
+            text-align: center;
+        }
+        button {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            width: 150%;
+        }
+        .form {
+            background-color: rgb(184, 160, 174); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 37%;
+            padding: 30px;
+        }
+        img {
+        float: left;
+        margin: 20px;
+        }
+</style>
+</head>
+<body>
+<center>
+    <h1>{{.Serial.S_name}}</h1>
+    <form action="/", method="get" style="position: absolute; left: 85%; top: 2.5%;">
+        <button type="submit" style="cursor: pointer;">На главную</button>
+    </form>
+</center>
+
+<img src={{.Serial.S_img}} style="width:fit-content; height:450px;">
+<h2>{{.Serial.S_description}}</h2>
+<h2 style="display: inline;">Жанр: </h2><label style="display: inline;">{{.Serial.S_genre}}</label><br>
+<h2 style="display: inline;">Статус: </h2><label style="display: inline;">{{.Serial.S_state}}</label><br>
+<h2 style="display: inline;">Год выхода: </h2><label style="display: inline;">{{.Serial.S_year}}</label><br>
+<h2 style="display: inline;">Количество сезонов: </h2><label style="display: inline;">{{.Serial.S_seasons}}</label><br>
+<h2 style="display: inline;">Рейтинг: </h2><label style="display: inline;">{{.Serial.S_rating}}</label><br>
+<h2 style="display: inline;">Общая продолжительность: </h2><label style="display: inline;">{{.Serial.S_duration}}</label><br>
+<h2 style="display: inline;">Актеры: </h2>
+{{range .Actors}}
+<label style="display: inline;">{{.A_name}} {{.A_surname}}; </label>
+{{end}}
+<br>
+<h2 style="display: inline;">Режиссер: </h2><label style="display: inline;">{{.Producer.P_name}} {{.Producer.P_surname}}</label><br>
+<br>
+<label style="margin: 0; padding: 0; color: rgb(186, 0, 0); font-size: 18px;">{{.Err}}</label><br>
+<form action="../serial/{{.Serial.S_id}}" method="post">
+    <input type="hidden" name="serial_id" value="{{.Serial.S_id}}">
+    <input type="submit" value="Добавить в избранное">
+</form>
+
+<div style="clear: left;">
+<h2>Список серий</h2>
+
+{{range .Seasons}}
+<h2>{{.Season.Ss_name}}</h2>
+<p>Количество серий: {{.Season.Ss_cntEpisodes}}</p>
+<p>Дата выхода: {{.Season.Ss_date}}</p>
+
+<table>
+    <thead><th>№</th><th>Название</th><th>Дата выхода</th><th>Продолжительность</th></thead>
+    {{range .Episodes}}
+    <tr>
+        <td>{{.E_num}}</td>
+        <td>{{.E_name}}</td>
+        <td>{{.E_date}}</td>
+        <td>{{.E_duration}}</td>
+    </tr>
+    {{end}}
+</table>
+{{end}}
+</div>
+<div>
+<h2>Комментарии</h2>
+{{if .Comments}}
+{{range .Comments}}
+<p>{{.U_name}}: {{.C_text}}</p>
+{{end}}
+{{else}}
+<p>Комментариев пока нет</p>
+{{end}}
+<form action="../user/addComment" method="get">
+    <input type="submit" value="Добавить комментарий" style="margin: 10px;"><br>
+</form>
+</div>
+</body>
+</html>

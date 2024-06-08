@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Update serial</title>
+<style>
+    body {
+        font-family: georgia;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(239, 233, 240);
+    }
+    h1 {
+        color: #333;
+        font-size: 55px;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+        background-color: rgba(228, 72, 72, 0.142);
+    }
+    p {
+        color: #666;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+    label {
+        font-family: inherit;
+        font-size: 20px;
+        margin: 15px 0px 0px 0px;
+    }
+    input[type=submit] {
+        border: #333;
+        border-radius: 10px 10px;
+        background-color: rgb(55, 47, 56);
+        color: aliceblue;
+        font-size: 20px;
+        font-family: inherit;
+        padding: 5px 10px;
+        margin: 15px 0px 0px 0px;
+        width: 100%;
+        cursor: pointer;
+    }
+    input[type=text], input[type=password], input[type=date], input[type=number], select {
+        border: #333;
+        border-radius: 10px 10px;
+        background-color: aliceblue;; 
+        font-family: inherit;
+        font-size: inherit;
+        width: 100%;
+        padding: 3px 0px 3px 3px;
+        cursor: text;
+    }
+    input[type=radio] {
+        font-family: inherit;
+        font-size: inherit;
+        margin: 2px;
+        cursor: pointer;
+    }
+    fieldset {
+        font-family: inherit;
+        font-size: inherit;
+        margin: 2px;
+    }
+    .form {
+        background-color: rgb(184, 160, 174); 
+        position: absolute; 
+        font-family: inherit;
+        font-size: 23px;
+        top: 10%;
+        left: 38%;
+        padding: 30px;
+    }
+</style>
+</head>
+<body>
+<center>
+    <h1>Изменение сериала</h1>
+</center>
+
+{{if .S}}
+<div class="form">
+<label style="margin: 0; padding: 0; color: rgb(186, 0, 0); font-size: 18px;">{{.Err}}</label><br>
+<form method="post">
+    <input type="hidden" name="id" value={{.S.S_id}}><br>
+    <label>Название</label><br>
+    <input type="text" name="name" value="{{.S.S_name}}"><br>
+    <label>Описание</label><br>
+    <input type="text" name="description" value="{{.S.S_description}}"><br>
+    <label>Жанр</label><br>
+    <input type="text" name="genre" value="{{.S.S_genre}}"><br>
+    <label>Год выхода</label><br>
+    <input type="text" name="year" value="{{.S.S_year}}"><br>
+    <label>Рейтинг</label><br>
+    <input type="text" name="rating" value="{{.S.S_rating}}"><br>
+    {{if eq .S.S_state "завершен"}}
+    <fieldset>
+        <legend>Статус</legend>
+        <div>
+            <input type="radio" name="state" value="завершен" checked>
+            <label>Завершен</label>
+        </div>
+        <div>
+            <input type="radio" name="state" value="продолжается">
+            <label>Продолжается</label>
+        </div>
+    </fieldset>
+    {{else}}
+    <fieldset>
+        <legend>Статус</legend>
+        <div>
+            <input type="radio" name="state" value="завершен">
+            <label>Завершен</label>
+        </div>
+        <div>
+            <input type="radio" name="state" value="продолжается" checked>
+            <label>Продолжается</label>
+        </div>
+    </fieldset>
+    {{end}}
+    <label>Продюссер</label><br>
+    <select name="idProducer">
+        <option value="{{.S.S_idProducer}}">--Без изменений--</option>
+        {{range .Producers}}
+            <option value="{{.P_id}}">{{.P_name}} {{.P_surname}}</option>
+        {{end}}
+    </select><br>
+    <label>Ссылка на постер</label><br>
+    <input type="text" name="img" value="{{.S.S_img}}"><br>
+    <input type="submit" value="Изменить"><br>
+</form>
+</div>
+{{else}}
+<form method="post">
+    <fieldset style="width: 60%; margin: 35px 0px 0px 35px; position: relative; left: 15%;">
+    <legend>Доступные сериалы</legend>
+    {{range .Serials}}
+    <div>
+        <input type="radio" name="serial" value={{.S_id}}>
+        <label>{{.S_name}}</label>
+    </div>
+    {{end}}
+    </fieldset>
+    <input type="submit" value="Выбрать" style="margin: 0px 0px 0px 40px; position: relative; left: 20%; width: fit-content;">
+    </form>
+{{end}}
+</div>
+</body>
+</html>

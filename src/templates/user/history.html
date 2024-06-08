@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>History</title>
+<style>
+    body {
+            font-family: georgia;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(239, 233, 240);
+        }
+        h1 {
+            color: #333;
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(228, 72, 72, 0.142);
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+        }
+        label {
+            font-family: inherit;
+            font-size: 20px;
+            margin: 15px 0px 0px 0px;
+        }
+        input[type=submit] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            margin: 5px;
+            width: fit-content;
+            cursor: pointer;
+        }
+        button {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: rgb(55, 47, 56);
+            color: aliceblue;
+            font-size: 20px;
+            font-family: inherit;
+            padding: 5px 10px;
+            width: 150%;
+        }
+        input[type=text], input[type=password], input[type=checkbox] {
+            border: #333;
+            border-radius: 10px 10px;
+            background-color: aliceblue;; 
+            font-family: inherit;
+            font-size: inherit;
+            padding: 3px 0px 3px 3px;
+        }
+        .form {
+            background-color: rgb(184, 160, 174); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 37%;
+            padding: 30px;
+        }
+        .profile {
+            background-color: rgb(219, 204, 213); 
+            position: absolute; 
+            font-family: inherit;
+            font-size: 23px;
+            top: 10%;
+            left: 5%;
+            padding: 30px;
+        }
+        table {
+            border: 2px solid rgb(26, 19, 19);
+            border-collapse: collapse;
+            margin: 25px;
+            font-size: 18px;
+            width: 80%;
+        }
+        thead {
+            background-color: rgb(255, 240, 240);
+        }
+        th, td {
+            border: 1px solid rgb(26, 19, 19);
+            padding: 2px;
+            background-color: rgb(255, 240, 240);
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 350px));
+            grid-gap: 10px;
+            margin: 10px;
+        }
+        .wrapper{
+            display:flex;
+            flex-direction: column;
+            border: 2px solid rgb(26, 19, 19);
+            background-color: rgba(214, 204, 215, 0.888);
+        }
+</style>
+</head>
+<body>
+<center>
+    <form action="clearHistory" method="post" style="position: absolute; left: 5%; top: 1.5%;">
+        <input type="submit" value="Очистить историю">
+    </form>
+    <h1>История просмотров</h1>
+    <form action="cabinet/0", method="get" style="position: absolute; left: 85%; top: 2.5%;">
+        <button type="submit" style="cursor: pointer;">Профиль</button>
+    </form>
+</center>
+
+{{if .History}}
+<div class="container">
+    {{range .History}}
+    <div class="wrapper">
+    <center>
+        <p><a href="../../serial/{{.Serial.S_id}}"><img src={{.Serial.S_img}} style="width:max-content; height:250px;margin: 5px;"></a></p>
+        <h2>{{.Serial.S_name}}</h2>
+        <p>Дата просмотра: {{.Date}}</p>
+    </center>
+    </div>
+    {{end}}
+</div>
+{{else}}
+    <center><h2>Вы пока не посмотрели ни одного сериала</h2></center>
+{{end}}
+
+</body>
+</html>
